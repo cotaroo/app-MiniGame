@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "pch.h"
 #include "control.h"
+#include <time.h>   // time関数
 
 void CONTROL::HitCheckBallAndBar()
 {
@@ -149,7 +151,7 @@ bool CONTROL::All()
 	bool back;
 
 	for (int i = 0; i<12; ++i) {
-		block[i]->All();
+		block[i]->All(i);
 	}
 
 
@@ -193,15 +195,35 @@ CONTROL::CONTROL()
 	bh = LoadSoundMem("bound.wav");
 	dh = LoadSoundMem("demolish.wav");
 
-	//ブロックの間を50ピクセルあけて、横4列、縦3行で配置
-	//左端が45ピクセルの位置になる。それに画像の横幅の半分を足す
+	//画像ファイル名の配列
+	char images[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
+
+	//ブロックの間ルを50ピクセルあけて、横4列、縦3行で配置
+	//左端が45ピクセの位置になる。それに画像の横幅の半分を足す
 	for (int i = 0; i<12; ++i) {
+
+		char imageFolder[100] = "image/";
+
+		// 例2: 乱数の種を設定（srand関数）
+		int     val2;
+
+		// srand関数で、乱数パターンを初期化する
+		// 乱数パターンの初期値は、現在時刻にしてやると、
+		// プログラム実行ごとに異なるパターンが使える
+		unsigned int    now = (unsigned int)time(0);
+		srand(now * i * rand());
+
+		// 毎回異なる乱数が取得できる
+		val2 = rand();
+
+
+		char* image = images[val2 % 3];
 		if (i<4)
-			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*i, 50 * 1);
+			block[i] = new BLOCK(strcat(imageFolder,image), 95 + (50 + 100)*i, 50 * 1, i);
 		else if (i>3 && i<8)
-			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*(i - 4), 50 * 2);
+			block[i] = new BLOCK(strcat(imageFolder, image), 95 + (50 + 100)*(i - 4), 50 * 2, i);
 		else
-			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*(i - 8), 50 * 3);
+			block[i] = new BLOCK(strcat(imageFolder, image), 95 + (50 + 100)*(i - 8), 50 * 3, i);
 	}
 
 	bkwidth = block[0]->GetWidth();
