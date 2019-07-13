@@ -7,7 +7,7 @@ BLOCK::BLOCK(char *filename, int x, int y)
 {
 	//ç≈èâÇµÇ©ì«Ç›çûÇ‹Ç»Ç¢ÅB
 	if (gh == -1)
-		gh = LoadGraph("block.bmp");
+		gh = LoadGraph("doshisha.png");
 
 	GetGraphSize(gh, &width, &height);
 
