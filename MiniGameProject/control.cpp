@@ -197,11 +197,11 @@ CONTROL::CONTROL()
 	//左端が45ピクセルの位置になる。それに画像の横幅の半分を足す
 	for (int i = 0; i<12; ++i) {
 		if (i<4)
-			block[i] = new BLOCK("block.bmp", 95 + (50 + 100)*i, 50 * 1);
+			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*i, 50 * 1);
 		else if (i>3 && i<8)
-			block[i] = new BLOCK("block.bmp", 95 + (50 + 100)*(i - 4), 50 * 2);
+			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*(i - 4), 50 * 2);
 		else
-			block[i] = new BLOCK("block.bmp", 95 + (50 + 100)*(i - 8), 50 * 3);
+			block[i] = new BLOCK("doshisha.png", 95 + (50 + 100)*(i - 8), 50 * 3);
 	}
 
 	bkwidth = block[0]->GetWidth();
