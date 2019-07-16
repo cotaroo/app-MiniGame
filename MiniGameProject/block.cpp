@@ -7,6 +7,7 @@ BLOCK::BLOCK(char *filename, int x, int y)
 {
 	//Å‰‚µ‚©“Ç‚İ‚Ü‚È‚¢B
 	if (gh == -1)
+		// “¯uĞ‚É‰æ‘œ‚ğ•ÏX‚·‚é
 		gh = LoadGraph("block.bmp");
 
 	GetGraphSize(gh, &width, &height);
