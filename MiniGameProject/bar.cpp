@@ -3,7 +3,7 @@
 
 BAR::BAR()
 {
-	gh = LoadGraph("bar.bmp");
+	gh = LoadGraph("image/doshisha.png");
 
 
 	GetGraphSize(gh, &width, &height);

@@ -2,10 +2,25 @@
 #include "control.h"
 
 char key[256];
+int Key[256]; // キーが押されているフレーム数を格納する
+
+// キーの入力状態を更新する
+int gpUpdateKey() {
+	char tmpKey[256]; // 現在のキーの入力状態を格納する
+	GetHitKeyStateAll(tmpKey); // 全てのキーの入力状態を得る
+	for (int i = 0; i<256; i++) {
+		if (tmpKey[i] != 0) { // i番のキーコードに対応するキーが押されていたら
+			Key[i]++;     // 加算
+		}
+		else {              // 押されていなければ
+			Key[i] = 0;   // 0にする
+		}
+	}
+	return 0;
+}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
-
 {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -20,23 +35,82 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		return -1;
 	}
 
+	// GameOverに関するフラグ
+	bool isGameOver = false;
+
 	//裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	//キーボードの状態を取得
+	// スタート画面の描画を行います
+	int font1;
+	font1 = CreateFontToHandle("メイリオ", 70, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
+	
+	
+	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+		DrawStringToHandle(100, 100, "Game Start!?", GetColor(255, 255, 255), font1);
 
-
-	CONTROL *control = new CONTROL;
-
-	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
-
-
-		//ゲームオーバーでtrueを返す
-		if (control->All()) {
+		if (Key[KEY_INPUT_SPACE] >= 1) {
 			break;
 		}
-
 	}
+
+	//キーボードの状態を取得
+	char firstStageImages[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
+	CONTROL *control = new CONTROL(firstStageImages);
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+		//ゲームオーバーでtrueを返す
+		if (control->All()) {
+			isGameOver = true;
+			break;
+		}
+	}
+
+	// GameOverになった場合の処理を行う
+	if (isGameOver == true) {
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
+		}
+		// DXライブラリを終了させる
+		DxLib_End();
+	}
+
+	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+		DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
+
+		if (Key[KEY_INPUT_SPACE] >= 1) {
+			break;
+		}
+	}
+
+	char secondeStageImages[2][100] = { "keio.png", "waseda.png" };
+	CONTROL *control2 = new CONTROL(secondeStageImages);
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+		//ゲームオーバーでtrueを返す
+		if (control2->All()) {
+			isGameOver = true;
+			break;
+		}
+	}
+
+	// GameOverになった場合の処理を行う
+	if (isGameOver == true) {
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
+		}
+		// DXライブラリを終了させる
+		DxLib_End();
+	}
+
 
 
 	//DXライブラリ終了

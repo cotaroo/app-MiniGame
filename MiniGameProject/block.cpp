@@ -1,16 +1,11 @@
 #include "pch.h"
 #include "block.h"
 
-int BLOCK::gh = -1;
-
-BLOCK::BLOCK(char *filename, int x, int y)
+BLOCK::BLOCK(char *filename, int x, int y, int num)
 {
-	//最初しか読み込まない。
-	if (gh == -1)
-		// 同志社に画像を変更する
-		gh = LoadGraph("block.bmp");
+	gh[num] = LoadGraph(filename);
 
-	GetGraphSize(gh, &width, &height);
+	GetGraphSize(gh[num], &width, &height);
 
 	endflag = false;
 
@@ -47,18 +42,18 @@ bool BLOCK::GetFlag()
 	return endflag;
 }
 
-void BLOCK::Draw()
+void BLOCK::Draw(int num)
 {
 	//ブロックが壊れてないときだけ描画
 	if (!endflag) {
-		DrawGraph(x - width / 2, y - height / 2, gh, FALSE);
+		DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 	}
 	else {
 		if (count<40) {
 			//透過度を指定
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (255 / 40)*(40 - count));
 			//描画
-			DrawGraph(x - width / 2, y - height / 2, gh, FALSE);
+			DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			//設定を戻す
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			++count;
@@ -67,7 +62,7 @@ void BLOCK::Draw()
 
 }
 
-void BLOCK::All()
+void BLOCK::All(int num)
 {
-	Draw();
+	Draw(num);
 }

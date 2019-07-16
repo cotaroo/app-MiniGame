@@ -37,7 +37,7 @@ private:
 	void SoundPlay();
 public:
 	bool All();
-	CONTROL();
+	CONTROL(char [3][100]);
 	~CONTROL();
 };
 
