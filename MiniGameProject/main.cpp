@@ -38,6 +38,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// GameOverに関するフラグ
 	bool isGameOver = false;
 
+	// hasBlockはブロックを持っているか
+	bool hasBlock = true;
+
 	//裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 
@@ -55,10 +58,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 	}
 
+	
+	/* 
+									////////////////////第一ステージ//////////////////////
+	*/
+
+
 	//キーボードの状態を取得
 	char firstStageImages[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
 	CONTROL *control = new CONTROL(firstStageImages);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+		
+		hasBlock = control->CheckBlock();
+		if (hasBlock == false) {
+			break;
+		}
+		
 		//ゲームオーバーでtrueを返す
 		if (control->All()) {
 			isGameOver = true;
@@ -79,18 +94,34 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		DxLib_End();
 	}
 
-	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
-	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-		DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
+	if (hasBlock == false) {
+		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
 
-		if (Key[KEY_INPUT_SPACE] >= 1) {
-			break;
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
 		}
 	}
 
-	char secondeStageImages[2][100] = { "keio.png", "waseda.png" };
+
+
+	/*
+											////////////////////第二ステージ//////////////////////
+	*/
+
+
+	hasBlock = true;
+	char secondeStageImages[3][100] = { "keio.png", "waseda.png", "jochi.png" };
 	CONTROL *control2 = new CONTROL(secondeStageImages);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+
+		hasBlock = control2->CheckBlock();
+		if (hasBlock == false) {
+			break;
+		}
+
 		//ゲームオーバーでtrueを返す
 		if (control2->All()) {
 			isGameOver = true;
@@ -111,6 +142,66 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		DxLib_End();
 	}
 
+
+	if (hasBlock == false) {
+		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
+
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
+		}
+	}
+
+
+
+	/*
+													////////////////////第三ステージ//////////////////////
+	*/
+
+
+	hasBlock = true;
+	char thirdStageImages[3][100] = { "kyodai.png", "todai.png", "oxford.png" };
+	CONTROL *control3 = new CONTROL(thirdStageImages);
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+
+		hasBlock = control3->CheckBlock();
+		if (hasBlock == false) {
+			break;
+		}
+
+		//ゲームオーバーでtrueを返す
+		if (control3->All()) {
+			isGameOver = true;
+			break;
+		}
+	}
+
+	// GameOverになった場合の処理を行う
+	if (isGameOver == true) {
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
+		}
+		// DXライブラリを終了させる
+		DxLib_End();
+	}
+
+
+	if (hasBlock == false) {
+		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+			DrawStringToHandle(100, 100, "All Finish", GetColor(255, 255, 255), font1);
+
+			if (Key[KEY_INPUT_SPACE] >= 1) {
+				break;
+			}
+		}
+	}
 
 
 	//DXライブラリ終了

@@ -62,6 +62,17 @@ void CONTROL::HitCheckBallAndBar()
 
 }
 
+bool CONTROL::CheckBlock() 
+{
+	// 
+	for (int i = 0; i < 12; i++) {
+		if (!block[i]->GetFlag()) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void CONTROL::HitCheckBallAndBlock()
 {
 

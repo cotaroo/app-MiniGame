@@ -37,6 +37,7 @@ private:
 	void SoundPlay();
 public:
 	bool All();
+	bool CheckBlock();
 	CONTROL(char [3][100]);
 	~CONTROL();
 };
