@@ -27,6 +27,21 @@ private:
 	//‰æ‘œ
 	char *imageName;
 
+	// CountRepeatNumber‚ÍŒJ‚è•Ô‚µ‰ñ”‚ğ•\Œ»‚µ‚Ä‚¢‚é
+	int CountRepeatNumber = 0;
+
+	int MovableWidth = 0;
+
+	bool FlagForKandai = false;
+	bool FlagForKangaku = false;
+	bool FlagForRitsumei = false;
+	bool FlagForKeio = false;
+	bool FlagForWaseda = false;
+	bool FlagForJochi = false;
+	bool FlagForTodai = false;
+	bool FlagForKyodai = false;
+	bool FlagForOxford = false;
+
 private:
 	void Draw(int);
 public:
