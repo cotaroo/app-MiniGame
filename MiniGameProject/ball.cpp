@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ball.h"
 
-BALL::BALL()
+BALL::BALL(int stageNumber)
 {
 
 	gh = LoadGraph("ball.bmp");
@@ -15,9 +15,24 @@ BALL::BALL()
 	//Å‰‚Í^‚ñ’†
 	x = WIDTH / 2;
 
-	//Å‰‚ÌŒW”
-	dx = 3;
-	dy = -3;
+	switch(stageNumber) {
+
+	case 1:
+		//Å‰‚ÌŒW”
+		dx = 3;
+		dy = -3;
+		break;
+
+	case 2:
+		dx = 4;
+		dy = -4;
+		break;
+
+	case 3:
+		dx = 5;
+		dy = -5;
+		break;
+	}
 
 	endflag = false;
 
@@ -37,8 +52,8 @@ void BALL::Move() {
 	soundflag = false;
 
 	//ˆÚ“®—Ê‚ğ‰ÁZ
-	x += dx;
-	y += dy;
+	x += (dx);
+	y += (dy);
 
 
 	//‰æ–Ê‚Í‚İo‚µˆ—

@@ -24,6 +24,9 @@ private:
 	//フェード描画用カウント
 	int count;
 
+	//画像
+	char *imageName;
+
 private:
 	void Draw(int);
 public:
@@ -33,7 +36,8 @@ public:
 	int GetHeight();
 	void SetFlag(bool);
 	bool GetFlag();
-	BLOCK(char *, int, int, int);
+	BLOCK(char *, char *, int, int, int);
 	void All(int);
+	int BLOCK::Rand();
 
 };

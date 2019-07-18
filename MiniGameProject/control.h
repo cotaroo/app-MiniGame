@@ -38,7 +38,7 @@ private:
 public:
 	bool All();
 	bool CheckBlock();
-	CONTROL(char [3][100]);
+	CONTROL(char [3][100], int);
 	~CONTROL();
 };
 

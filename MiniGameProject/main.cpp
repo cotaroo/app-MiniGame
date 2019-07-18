@@ -66,7 +66,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//キーボードの状態を取得
 	char firstStageImages[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
-	CONTROL *control = new CONTROL(firstStageImages);
+
+	// 第二引数はステージナンバー
+	CONTROL *control = new CONTROL(firstStageImages, 1);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
 		
 		hasBlock = control->CheckBlock();
@@ -114,7 +116,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	hasBlock = true;
 	char secondeStageImages[3][100] = { "keio.png", "waseda.png", "jochi.png" };
-	CONTROL *control2 = new CONTROL(secondeStageImages);
+
+	// 第二引数はステージナンバー
+	CONTROL *control2 = new CONTROL(secondeStageImages, 2);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
 
 		hasBlock = control2->CheckBlock();
@@ -163,7 +167,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	hasBlock = true;
 	char thirdStageImages[3][100] = { "kyodai.png", "todai.png", "oxford.png" };
-	CONTROL *control3 = new CONTROL(thirdStageImages);
+
+	// 第二引数はステージナンバー
+	CONTROL *control3 = new CONTROL(thirdStageImages, 3);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
 
 		hasBlock = control3->CheckBlock();

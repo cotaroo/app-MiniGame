@@ -186,11 +186,12 @@ bool CONTROL::All()
 }
 
 
-CONTROL::CONTROL(char images[3][100])
+CONTROL::CONTROL(char images[3][100], int stageNumber)
 {
+
 	//バーとボールのインスタンスを生成
 	bar = new BAR;
-	ball = new BALL;
+	ball = new BALL(stageNumber);
 
 	boundflag = false;
 	demolishflag = false;
@@ -229,13 +230,14 @@ CONTROL::CONTROL(char images[3][100])
 		val2 = rand();
 
 
+
 		char* image = images[val2 % 3];
 		if (i<4)
-			block[i] = new BLOCK(strcat(imageFolder,image), 95 + (50 + 100)*i, 50 * 1, i);
+			block[i] = new BLOCK(strcat(imageFolder,image), image, 95 + (50 + 100)*i, 50 * 1, i);
 		else if (i>3 && i<8)
-			block[i] = new BLOCK(strcat(imageFolder, image), 95 + (50 + 100)*(i - 4), 50 * 2, i);
+			block[i] = new BLOCK(strcat(imageFolder, image), image, 95 + (50 + 100)*(i - 4), 50 * 2, i);
 		else
-			block[i] = new BLOCK(strcat(imageFolder, image), 95 + (50 + 100)*(i - 8), 50 * 3, i);
+			block[i] = new BLOCK(strcat(imageFolder, image), image, 95 + (50 + 100)*(i - 8), 50 * 3, i);
 	}
 
 	bkwidth = block[0]->GetWidth();

@@ -30,7 +30,7 @@ private:
 	void Move();
 
 public:
-	BALL();
+	BALL(int);
 	~BALL();
 	bool All();
 	int GetX();
