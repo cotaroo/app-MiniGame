@@ -50,7 +50,7 @@ bool BLOCK::GetFlag()
 void BLOCK::Draw(int num)
 {
 	CountRepeatNumber++;
-	if (CountRepeatNumber % 40 == 0) {
+	if (CountRepeatNumber % 3 == 0) {
 		MovableWidth++;
 	}
 
