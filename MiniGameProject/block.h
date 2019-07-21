@@ -7,6 +7,9 @@ private:
 	//座標
 	int x, y;
 
+	//初期座標
+	int inix, iniy;
+
 	//ブロック番号
 	int num;
 
