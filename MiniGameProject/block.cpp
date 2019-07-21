@@ -142,10 +142,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForKeio == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * 2, y - height / 2 + (MovableWidth) * 2, gh[num], FALSE);
+				this->x = inix + (MovableWidth) * 2;
+				this->y = iniy + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth) * 2), y - height / 2 + (59 - (MovableWidth) * 2), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+				this->y = iniy + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
@@ -160,10 +167,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForWaseda == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * 2, y - height / 2 + (MovableWidth) * 2, gh[num], FALSE);
+				this->x = inix + (MovableWidth) * 2;
+				this->y = iniy + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth) * 2), y - height / 2 + (59 - (MovableWidth) * 2), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+				this->y = iniy + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
@@ -178,10 +192,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForJochi == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * 2, y - height / 2 + (MovableWidth) * 2, gh[num], FALSE);
+				this->x = inix + (MovableWidth) * 2;
+				this->y = iniy + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth) * 2), y - height / 2 +(59 - (MovableWidth) * 2), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+				this->y = iniy + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
@@ -196,10 +217,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForTodai == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+				this->x = inix + (MovableWidth) * BLOCK::Rand();
+				this->y = iniy + (MovableWidth) * BLOCK::Rand();
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * BLOCK::Rand());
+				this->y = iniy + (59 - (MovableWidth) * BLOCK::Rand());
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
@@ -214,10 +242,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForKyodai == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+				this->x = inix + (MovableWidth)* BLOCK::Rand();
+				this->y = iniy + (MovableWidth)* BLOCK::Rand();
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 +  (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth)* BLOCK::Rand());
+				this->y = iniy + (59 - (MovableWidth)* BLOCK::Rand());
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
@@ -232,10 +267,17 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForOxford == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+				this->x = inix + (MovableWidth)* BLOCK::Rand();
+				this->y = iniy + (MovableWidth)* BLOCK::Rand();
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (MovableWidth) * BLOCK::Rand(), y - height / 2 + (MovableWidth) * BLOCK::Rand(), gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth)* BLOCK::Rand());
+				this->y = iniy + (59 - (MovableWidth)* BLOCK::Rand());
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}

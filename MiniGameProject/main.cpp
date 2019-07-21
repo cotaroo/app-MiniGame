@@ -159,7 +159,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 
-
 	/*
 													////////////////////第三ステージ//////////////////////
 	*/
