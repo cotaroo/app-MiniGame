@@ -35,15 +35,9 @@ private:
 
 	int MovableWidth = 0;
 
-	bool FlagForKandai = false;
-	bool FlagForKangaku = false;
-	bool FlagForRitsumei = false;
-	bool FlagForKeio = false;
-	bool FlagForWaseda = false;
-	bool FlagForJochi = false;
-	bool FlagForTodai = false;
-	bool FlagForKyodai = false;
-	bool FlagForOxford = false;
+	bool FlagForStage1 = false;
+	bool FlagForStage2 = false;
+	bool FlagForStage3 = false;
 
 private:
 	void Draw(int);
@@ -56,6 +50,6 @@ public:
 	bool GetFlag();
 	BLOCK(char *, char *, int, int, int);
 	void All(int);
-	int BLOCK::Rand();
+	int BLOCK::Rand(int);
 
 };

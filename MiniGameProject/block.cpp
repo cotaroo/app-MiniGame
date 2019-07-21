@@ -62,19 +62,19 @@ void BLOCK::Draw(int num)
 		
 		const char *image = imageName;
 
-		char images[9][100] = { "kandai.png" , "kangaku.png", "ritsumei.png", "keio.png", "waseda.png", "jochi.png", "todai.png"," kyodai.png", "oxford.png" };
+		char images[9][101] = { "kandai.png" , "kangaku.png", "ritsumei.png", "keio.png", "waseda.png", "jochi.png", "todai.png"," kyodai.png", "oxford.png" };
 
 		// 以下で画像による動きの分類を行う
-		if (*imageName == images[0][100]) {
+		if (*imageName == images[0][101] || *imageName == images[1][101] || *imageName == images[2][101]) {
 			if (MovableWidth == 30) {
-				if (FlagForKandai == false) {
-					FlagForKandai = true;
+				if (FlagForStage1 == false) {
+					FlagForStage1 = true;
 				} else {
-					FlagForKandai = false;
+					FlagForStage1 = false;
 				}
 				MovableWidth = 0;
 			}
-			if (FlagForKandai == false) {
+			if (FlagForStage1 == false) {
 
 				this->x = inix + (MovableWidth) * 2;
 
@@ -87,61 +87,18 @@ void BLOCK::Draw(int num)
 				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 		}
-		else if(*imageName == images[1][100]) {
+		
+		else if (*imageName == images[3][101] || *imageName == images[4][101] || *imageName == images[5][101]) {
 			if (MovableWidth == 30) {
-				if (FlagForKangaku == false) {
-					FlagForKangaku = true;
+				if (FlagForStage2 == false) {
+					FlagForStage2 = true;
 				}
 				else {
-					FlagForKangaku = false;
+					FlagForStage2 = false;
 				}
 				MovableWidth = 0;
 			}
-			if (FlagForKangaku == false) {
-				this->x = inix + (MovableWidth) * 2;
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth) * 2);
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-		}
-		else if (*imageName == images[2][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForRitsumei == false) {
-					FlagForRitsumei = true;
-				}
-				else {
-					FlagForRitsumei = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForRitsumei == false) {
-				this->x = inix + (MovableWidth) * 2;
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth) * 2);
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-		}
-		else if (*imageName == images[3][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForKeio == false) {
-					FlagForKeio = true;
-				}
-				else {
-					FlagForKeio = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForKeio == false) {
+			if (FlagForStage2 == false) {
 				this->x = inix + (MovableWidth) * 2;
 				this->y = iniy + (MovableWidth) * 2;
 
@@ -156,131 +113,33 @@ void BLOCK::Draw(int num)
 			}
 
 		}
-		else if (*imageName == images[4][100]) {
+
+		else if (*imageName == images[6][101] || *imageName == images[7][101] || *imageName == images[8][101]) {
 			if (MovableWidth == 30) {
-				if (FlagForWaseda == false) {
-					FlagForWaseda = true;
+				if (FlagForStage3 == false) {
+					FlagForStage3 = true;
 				}
 				else {
-					FlagForWaseda = false;
+					FlagForStage3 = false;
 				}
 				MovableWidth = 0;
 			}
-			if (FlagForWaseda == false) {
-				this->x = inix + (MovableWidth) * 2;
-				this->y = iniy + (MovableWidth) * 2;
+			if (FlagForStage3 == false) {
+				this->x = inix + (MovableWidth) * BLOCK::Rand(x) % 3;
+				this->y = iniy + (MovableWidth) * BLOCK::Rand(y) % 3;
 
 				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
 
-				this->x = inix + (59 - (MovableWidth) * 2);
-				this->y = iniy + (59 - (MovableWidth) * 2);
+				this->x = inix + (59 - (MovableWidth) * BLOCK::Rand(x) % 3);
+				this->y = iniy + (59 - (MovableWidth) * BLOCK::Rand(y) % 3);
 
 				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 
 		}
-		else if (*imageName == images[5][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForJochi == false) {
-					FlagForJochi = true;
-				}
-				else {
-					FlagForJochi = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForJochi == false) {
-				this->x = inix + (MovableWidth) * 2;
-				this->y = iniy + (MovableWidth) * 2;
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth) * 2);
-				this->y = iniy + (59 - (MovableWidth) * 2);
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-
-		}
-		else if (*imageName == images[6][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForTodai == false) {
-					FlagForTodai = true;
-				}
-				else {
-					FlagForTodai = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForTodai == false) {
-				this->x = inix + (MovableWidth) * BLOCK::Rand();
-				this->y = iniy + (MovableWidth) * BLOCK::Rand();
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth) * BLOCK::Rand());
-				this->y = iniy + (59 - (MovableWidth) * BLOCK::Rand());
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-
-		}
-		else if (*imageName == images[7][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForKyodai == false) {
-					FlagForKyodai = true;
-				}
-				else {
-					FlagForKyodai = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForKyodai == false) {
-				this->x = inix + (MovableWidth)* BLOCK::Rand();
-				this->y = iniy + (MovableWidth)* BLOCK::Rand();
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth)* BLOCK::Rand());
-				this->y = iniy + (59 - (MovableWidth)* BLOCK::Rand());
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-
-		}
-		else if (*imageName == images[8][100]) {
-			if (MovableWidth == 30) {
-				if (FlagForOxford == false) {
-					FlagForOxford = true;
-				}
-				else {
-					FlagForOxford = false;
-				}
-				MovableWidth = 0;
-			}
-			if (FlagForOxford == false) {
-				this->x = inix + (MovableWidth)* BLOCK::Rand();
-				this->y = iniy + (MovableWidth)* BLOCK::Rand();
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-			else {
-
-				this->x = inix + (59 - (MovableWidth)* BLOCK::Rand());
-				this->y = iniy + (59 - (MovableWidth)* BLOCK::Rand());
-
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			}
-
-		}
+		
 
 	}
 	else {
@@ -302,15 +161,17 @@ void BLOCK::All(int num)
 	Draw(num);
 }
 
-int BLOCK::Rand()
+int BLOCK::Rand(int num)
 {
-
+	int     val2;
 	// srand関数で、乱数パターンを初期化する
 	// 乱数パターンの初期値は、現在時刻にしてやると、
 	// プログラム実行ごとに異なるパターンが使える
 	unsigned int    now = (unsigned int)time(0);
-	srand(now * rand());
+	srand(now * rand() * num);
 
 	// 毎回異なる乱数が取得できる
-	return rand();
+	val2 = rand();
+
+	return val2;
 }

@@ -111,7 +111,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	/*
 											////////////////////第二ステージ//////////////////////
-	*/
+	
 
 
 	hasBlock = true;
@@ -159,6 +159,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 
+	*/
 	/*
 													////////////////////第三ステージ//////////////////////
 	*/
