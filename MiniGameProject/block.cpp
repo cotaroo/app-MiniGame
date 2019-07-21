@@ -16,6 +16,9 @@ BLOCK::BLOCK(char *filename, char *image, int x, int y, int num)
 	this->x = x;
 	this->y = y;
 
+	inix = x;
+	iniy = y;
+
 	count = 0;
 
 }
@@ -72,10 +75,16 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForKandai == false) {
-				DrawGraph(x - width / 2 + (MovableWidth)*2, y - height / 2, gh[num], FALSE);
+
+				this->x = inix + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth)*2), y - height / 2, gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 		}
 		else if(*imageName == images[1][100]) {
@@ -89,10 +98,15 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForKangaku == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * 2, y - height / 2, gh[num], FALSE);
+				this->x = inix + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth) * 2), y - height / 2, gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 		}
 		else if (*imageName == images[2][100]) {
@@ -106,10 +120,15 @@ void BLOCK::Draw(int num)
 				MovableWidth = 0;
 			}
 			if (FlagForRitsumei == false) {
-				DrawGraph(x - width / 2 + (MovableWidth) * 2, y - height / 2, gh[num], FALSE);
+				this->x = inix + (MovableWidth) * 2;
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 			else {
-				DrawGraph(x - width / 2 + (59 - (MovableWidth) * 2), y - height / 2, gh[num], FALSE);
+
+				this->x = inix + (59 - (MovableWidth) * 2);
+
+				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 		}
 		else if (*imageName == images[3][100]) {
