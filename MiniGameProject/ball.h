@@ -4,24 +4,24 @@
 
 class BALL {
 private:
-	//x座標、y座標
+	// x座標、y座標
 	int x, y;
 
-	//xとyの移動量
+	// xとyの移動量
 	int dx, dy;
 
 
-	//画像の横、縦幅
+	// 画像の横、縦幅
 	int width, height;
 
 
-	//ゲームーオーバーフラグ
+	// ゲームーオーバーフラグ
 	bool endflag;
 
-	//音を鳴らすかどうかのフラグ
+	// 音を鳴らすかどうかのフラグ
 	bool soundflag;
 
-	//グラフィックハンドル
+	// グラフィックハンドル
 	int gh;
 
 private:

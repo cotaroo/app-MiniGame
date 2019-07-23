@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "control.h"
 #include <Windows.h>
+#include <fstream>
 
 char key[256];
 int Key[256]; // キーが押されているフレーム数を格納する
-
+int PlayGameCounter = 0; // ゲームをプレイした回数を格納する
+int WinCounter = 0; // 勝利した回数を格納する
+double winRate; // 勝率を格納する
 
 // 現在のディレクトリの階層を取得する
 void getCurrentDirectory(char *currentDirectory) {
@@ -57,6 +60,56 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	sprintf_s(settingFile, "%s\\setting.ini", currentDirectory);
 	
 	int life = GetPrivateProfileInt(section, unit, -1, settingFile);
+
+	// 結果ファイルへの入出力を行う
+	FILE *fp;
+	char line[BUFFSIZE];
+
+	errno_t error;
+
+	// ファイルをオープンしている
+	error = fopen_s(&fp, "result.txt", "r");
+
+	// ファイルオープンが失敗すると、エラーを出すようにしている
+	if (error != 0) {
+		fprintf_s(stderr, "failed to open");
+	}
+	else {
+		int lineCounter = 0;
+		while (fgets(line, BUFFSIZE, fp) != NULL) {
+			lineCounter++;
+			if (lineCounter == 1) {
+				PlayGameCounter = (int)(*line) -48;
+			}
+			else if (lineCounter == 2) {
+				WinCounter = (int)(*line) -48;
+			}
+		}
+		fclose(fp);
+	}
+
+	// 以下からはファイルへの書き込みを行う
+	error = fopen_s(&fp, "result.txt", "w");
+	if (error != 0) {
+		fprintf_s(stderr, "failed to open");
+	}
+	else {
+		char buf0[12];
+		PlayGameCounter += 1; 
+		snprintf(buf0, 12, "%d", PlayGameCounter);
+		fputs(buf0, fp);
+
+		char buf00[12];
+		snprintf(buf00, 12, "%d\n", WinCounter);
+		fputs(buf00, fp);
+
+		char buf000[100];
+		snprintf(buf000, 100, "あなたの勝率は%dパーセントです\n", (100 * WinCounter / PlayGameCounter));
+		fputs(buf000, fp);
+
+		fclose(fp);
+	}
+
 
 
 	// DXライブラリ初期化
@@ -282,6 +335,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	if (hasBlock == false) {
 		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+		WinCounter += 1;
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
 			DrawStringToHandle(100, 100, "All Finish", GetColor(255, 255, 255), font1);
 
@@ -289,6 +343,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				break;
 			}
 		}
+	}
+
+	// 以下からはファイルへの書き込みを行う
+	error = fopen_s(&fp, "result.txt", "w");
+	if (error != 0) {
+		fprintf_s(stderr, "failed to open");
+	}
+	else {
+		char buf[12];
+		snprintf(buf, 12, "%d\n", PlayGameCounter);
+		fputs(buf, fp);
+
+		char buf2[12];
+		snprintf(buf2, 12, "%d\n", WinCounter);
+		fputs(buf2, fp);
+
+		char buf3[100];
+		snprintf(buf3, 100, "あなたの勝率は %d パーセントです\n", (100 * WinCounter / PlayGameCounter));
+		fputs(buf3, fp);
+		fclose(fp);
+
+		fclose(fp);
 	}
 
 
