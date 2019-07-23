@@ -30,6 +30,10 @@ int gpUpdateKey() {
 	return 0;
 }
 
+void DrawEnemy(int gh, int enemeNumber) {
+	DrawExtendGraph(30 + 100 * enemeNumber, 30, 150 + 100 * enemeNumber, 150 + 100 * enemeNumber, gh, true);
+}
+
 // 残りライフに応じて画像の描画数を変更する
 void DrawLife(int life, int gh) {
 	int lifeCount = 0;
@@ -37,6 +41,7 @@ void DrawLife(int life, int gh) {
 		DrawExtendGraph(500 + lifeCount * 50, 400, 550 + lifeCount * 50, 450, gh, true);
 	}
 }
+
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
@@ -128,19 +133,44 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// スタート画面の描画を行います
 	int font1;
-	font1 = CreateFontToHandle("メイリオ", 70, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
+	int font2;
+	font1 = CreateFontToHandle("メイリオ", 50, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
+	font2 = CreateFontToHandle("メイリオ", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	
-	
+	// 音楽の番号を入れる
+	int musicNumber;
+	char music[3][100] = { "天体観測.wav", "セプテンバーさん.mp3", "アイネクライネ.mp3" };
+
 	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-		DrawStringToHandle(100, 100, "Game Start??", GetColor(255, 255, 255), font1);
+		DrawStringToHandle(150, 200, "Game Start??", GetColor(255, 255, 255), font1);
 
 		if (Key[KEY_INPUT_SPACE] >= 1) {
 			break;
 		}
 	}
 
+	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
+	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
+		DrawStringToHandle(150, 200, "Select Music ", GetColor(255, 255, 255), font1);
+		DrawStringToHandle(150, 400, "Please Enter A or B or C ", GetColor(255, 255, 255), font2);
 
+		if (Key[KEY_INPUT_A] >= 1) {
+			musicNumber = 0;
+			break;
+		}else if (Key[KEY_INPUT_B] >= 1) {
+			musicNumber = 1;
+			break;
+		}else if (Key[KEY_INPUT_C] >= 1) {
+			musicNumber = 2;
+			break;
+		}
+	}
+	char buffer[30];
+	strcpy_s(buffer, "sound/");
+	strcat_s(buffer, music[musicNumber]);
+
+	PlaySound(buffer, DX_PLAYTYPE_LOOP);
 	
 	/* 
 									////////////////////第一ステージ//////////////////////
@@ -187,7 +217,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// GameOverになった場合の処理を行う
 	if (isGameOver == true) {
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "You are loser", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -201,7 +231,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (hasBlock == false) {
 		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "Next Stage!?", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -253,7 +283,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// GameOverになった場合の処理を行う
 	if (isGameOver == true) {
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "You are loser", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -267,7 +297,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	if (hasBlock == false) {
 		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "Next Stage!?", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "Next Stage!?", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -282,6 +312,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 
 	hasBlock = true;
+
+	// オプションの敵を付けるかどうかのフラグである
+	bool enemyFlag[5] = { false, false, false, false, false };
+
 	char thirdStageImages[3][100] = { "kyodai.png", "todai.png", "oxford.png" };
 
 	// 第二引数はステージナンバー
@@ -313,8 +347,44 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 			break;
 		}
 
-		// 画面右下にライフを設定する
 		int gh = LoadGraph("image/unit.png");
+
+		if (Key[KEY_INPUT_0] >= 1) {
+			enemyFlag[0] = true;
+		}
+		if (enemyFlag[0] == true) {
+			DrawEnemy(gh, 0);
+		}
+
+		if (Key[KEY_INPUT_1] >= 1) {
+			enemyFlag[1] = true;
+		}
+		if (enemyFlag[1] == true) {
+			DrawEnemy(gh, 1);
+		}
+		
+		if (Key[KEY_INPUT_2] >= 1) {
+			enemyFlag[2] = true;
+		}
+		if (enemyFlag[2] == true) {
+			DrawEnemy(gh, 2);
+		}
+
+		if (Key[KEY_INPUT_3] >= 1) {
+			enemyFlag[3] = true;
+		}
+		if (enemyFlag[3] == true) {
+			DrawEnemy(gh, 3);
+		}
+		
+		if (Key[KEY_INPUT_4] >= 1) {
+			enemyFlag[4] = true;
+		}
+		if (enemyFlag[4] == true) {
+			DrawEnemy(gh, 4);
+		}
+
+		// 画面右下にライフを設定する
 
 		DrawLife(life, gh);
 	}
@@ -322,7 +392,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// GameOverになった場合の処理を行う
 	if (isGameOver == true) {
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "You are loser", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "You are loser", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -337,7 +407,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 		WinCounter += 1;
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-			DrawStringToHandle(100, 100, "All Finish", GetColor(255, 255, 255), font1);
+			DrawStringToHandle(150, 200, "All Finish", GetColor(255, 255, 255), font1);
 
 			if (Key[KEY_INPUT_SPACE] >= 1) {
 				break;
@@ -360,7 +430,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		fputs(buf2, fp);
 
 		char buf3[100];
-		snprintf(buf3, 100, "あなたの勝率は %d パーセントです\n", (100 * WinCounter / PlayGameCounter));
+		snprintf(buf3, 100, "あなたの勝率は%dパーセントです\n", (100 * WinCounter / PlayGameCounter));
 		fputs(buf3, fp);
 		fclose(fp);
 
