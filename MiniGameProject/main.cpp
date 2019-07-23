@@ -1,8 +1,15 @@
 #include "pch.h"
 #include "control.h"
+#include <Windows.h>
 
 char key[256];
 int Key[256]; // キーが押されているフレーム数を格納する
+
+
+void getCurrentDirectory(char *currentDirectory) {
+	GetCurrentDirectory(CHARBUFF, currentDirectory);
+}
+
 
 // キーの入力状態を更新する
 int gpUpdateKey() {
@@ -19,6 +26,14 @@ int gpUpdateKey() {
 	return 0;
 }
 
+// 
+void DrawLife(int life, int gh) {
+	int lifeCount = 0;
+	for (lifeCount; lifeCount < life; lifeCount++) {
+		DrawExtendGraph(500 + lifeCount * 50, 400, 550 + lifeCount * 50, 450, gh, true);
+	}
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
 {
@@ -28,6 +43,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 #endif
 
 	ChangeWindowMode(TRUE);
+
+
+	char currentDirectory[CHARBUFF];
+	getCurrentDirectory(currentDirectory);
+	char section[CHARBUFF];
+	sprintf_s(section, "section");
+	char unit[CHARBUFF];
+	sprintf_s(unit, "unit");
+	char settingFile[CHARBUFF];
+	sprintf_s(settingFile, "%s\\setting.ini", currentDirectory);
+	
+	int life = GetPrivateProfileInt(section, unit, -1, settingFile);
 
 
 	//DXライブラリ初期化
@@ -51,12 +78,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
-		DrawStringToHandle(100, 100, "Game Start!?", GetColor(255, 255, 255), font1);
+		DrawStringToHandle(100, 100, "Game Start??", GetColor(255, 255, 255), font1);
 
 		if (Key[KEY_INPUT_SPACE] >= 1) {
 			break;
 		}
 	}
+
 
 	
 	/* 
@@ -69,7 +97,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// 第二引数はステージナンバー
 	CONTROL *control = new CONTROL(firstStageImages, 1);
-	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 		
 		hasBlock = control->CheckBlock();
 		if (hasBlock == false) {
@@ -77,10 +105,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 		
 		//ゲームオーバーでtrueを返す
-		if (control->All()) {
-			isGameOver = true;
+		if (control->All(life)) {
+			// lifeが0でなければゲームは続行する
+			life = life - 1;
+			if (life != 0) {
+			}
+			else {
+				isGameOver = true;
+				break;
+			}
+		}
+
+		// 以下から隠しコマンド
+		// 現在のステージをスキップする
+		if (Key[KEY_INPUT_A] >= 1) {
+			hasBlock = false;
 			break;
 		}
+
+		// 画面右下にライフを設定する
+		int gh = LoadGraph("image/unit.png");
+
+		DrawLife(life, gh);
+		
 	}
 
 	// GameOverになった場合の処理を行う
@@ -108,8 +155,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 
-
-	/*
+	
 											////////////////////第二ステージ//////////////////////
 	
 
@@ -119,7 +165,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// 第二引数はステージナンバー
 	CONTROL *control2 = new CONTROL(secondeStageImages, 2);
-	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 
 		hasBlock = control2->CheckBlock();
 		if (hasBlock == false) {
@@ -127,10 +173,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 
 		//ゲームオーバーでtrueを返す
-		if (control2->All()) {
-			isGameOver = true;
+		if (control2->All(life)) {
+			// lifeが0でなければゲームは続行する
+			life = life - 1;
+			if (life != 0) {
+			}
+			else {
+				isGameOver = true;
+				break;
+			}
+		}
+
+		// 以下から隠しコマンド
+		// 現在のステージをスキップする
+		if (Key[KEY_INPUT_A] >= 1) {
+			hasBlock = false;
 			break;
 		}
+
+		// 画面右下にライフを設定する
+		int gh = LoadGraph("image/unit.png");
+
+		DrawLife(life, gh);
 	}
 
 	// GameOverになった場合の処理を行う
@@ -159,7 +223,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	}
 
 
-	*/
 	/*
 													////////////////////第三ステージ//////////////////////
 	*/
@@ -170,7 +233,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	// 第二引数はステージナンバー
 	CONTROL *control3 = new CONTROL(thirdStageImages, 3);
-	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0) {
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 
 		hasBlock = control3->CheckBlock();
 		if (hasBlock == false) {
@@ -178,10 +241,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		}
 
 		//ゲームオーバーでtrueを返す
-		if (control3->All()) {
-			isGameOver = true;
+		if (control3->All(life)) {
+				life = life - 1;
+			// lifeが0でなければゲームは続行する
+			if (life != 0) {
+			}
+			else {
+				isGameOver = true;
+				break;
+			}
+
+		}
+
+		// 以下から隠しコマンド
+		// 現在のステージをスキップする
+		if (Key[KEY_INPUT_A] >= 1) {
+			hasBlock = false;
 			break;
 		}
+
+		// 画面右下にライフを設定する
+		int gh = LoadGraph("image/unit.png");
+
+		DrawLife(life, gh);
 	}
 
 	// GameOverになった場合の処理を行う
@@ -217,4 +299,3 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	return 0;
 }
-

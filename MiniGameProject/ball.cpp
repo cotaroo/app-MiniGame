@@ -46,7 +46,9 @@ void BALL::Draw() {
 
 }
 
-void BALL::Move() {
+void BALL::Move(int life) {
+	// endflag を初期的にfalseにしておく
+	endflag = false;
 
 	//まず音はOFFにしとく
 	soundflag = false;
@@ -79,7 +81,15 @@ void BALL::Move() {
 
 	//下にはみ出たらゲームオーバー
 	if (y>HEIGHT) {
+		if (life == 0) {
+		}
+		else {
+			y = HEIGHT - height / 2;
+			dy *= -1;
+			soundflag = true;
+		}
 		endflag = true;
+
 	}
 
 }
@@ -134,10 +144,10 @@ bool BALL::GetSoundflag()
 
 
 
-bool BALL::All()
+bool BALL::All(int life)
 {
 
-	Move();
+	Move(life);
 
 	//描画処理
 	Draw();
@@ -158,15 +168,3 @@ BALL::~BALL()
 	Destroy();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

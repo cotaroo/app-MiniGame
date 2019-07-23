@@ -27,12 +27,12 @@ private:
 private:
 	void Draw();
 	void Destroy();
-	void Move();
+	void Move(int);
 
 public:
 	BALL(int);
 	~BALL();
-	bool All();
+	bool All(int);
 	int GetX();
 	int GetY();
 	int GetWidth();
