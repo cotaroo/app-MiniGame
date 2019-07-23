@@ -139,7 +139,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	
 	// 音楽の番号を入れる
 	int musicNumber;
-	char music[3][100] = { "天体観測.wav", "セプテンバーさん.mp3", "アイネクライネ.mp3" };
+	char music[3][100] = { "still.mp3", "begarosuto.mp3", "12345.mp3" };
 
 	// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 	while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
