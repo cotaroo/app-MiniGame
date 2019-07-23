@@ -6,6 +6,7 @@ char key[256];
 int Key[256]; // キーが押されているフレーム数を格納する
 
 
+// 現在のディレクトリの階層を取得する
 void getCurrentDirectory(char *currentDirectory) {
 	GetCurrentDirectory(CHARBUFF, currentDirectory);
 }
@@ -26,13 +27,14 @@ int gpUpdateKey() {
 	return 0;
 }
 
-// 
+// 残りライフに応じて画像の描画数を変更する
 void DrawLife(int life, int gh) {
 	int lifeCount = 0;
 	for (lifeCount; lifeCount < life; lifeCount++) {
 		DrawExtendGraph(500 + lifeCount * 50, 400, 550 + lifeCount * 50, 450, gh, true);
 	}
 }
+
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine, int nCmdShow)
@@ -44,7 +46,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	ChangeWindowMode(TRUE);
 
-
+	// iniファイルの読み込みに関する操作を行う
 	char currentDirectory[CHARBUFF];
 	getCurrentDirectory(currentDirectory);
 	char section[CHARBUFF];
@@ -57,7 +59,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	int life = GetPrivateProfileInt(section, unit, -1, settingFile);
 
 
-	//DXライブラリ初期化
+	// DXライブラリ初期化
 	if (DxLib_Init() == -1) {
 		return -1;
 	}
@@ -68,7 +70,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	// hasBlockはブロックを持っているか
 	bool hasBlock = true;
 
-	//裏画面に描画
+	// 裏画面に描画
 	SetDrawScreen(DX_SCREEN_BACK);
 
 	// スタート画面の描画を行います
@@ -92,24 +94,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	*/
 
 
-	//キーボードの状態を取得
+	// キーボードの状態を取得
 	char firstStageImages[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
 
 	// 第二引数はステージナンバー
 	CONTROL *control = new CONTROL(firstStageImages, 1);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 		
+		// blockのチェックを行い、0の場合は処理を中断する
 		hasBlock = control->CheckBlock();
 		if (hasBlock == false) {
 			break;
 		}
 		
-		//ゲームオーバーでtrueを返す
+		// ゲームオーバーでtrueを返す
 		if (control->All(life)) {
 			// lifeが0でなければゲームは続行する
 			life = life - 1;
-			if (life != 0) {
-			}
+			if (life != 0) {}
 			else {
 				isGameOver = true;
 				break;
@@ -125,7 +127,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		// 画面右下にライフを設定する
 		int gh = LoadGraph("image/unit.png");
-
 		DrawLife(life, gh);
 		
 	}
@@ -143,6 +144,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		DxLib_End();
 	}
 
+	// 全てのブロックを崩すと、次のステージに進む
 	if (hasBlock == false) {
 		// while( 裏画面を表画面に反映, メッセージ処理, 画面クリア )
 		while (!ScreenFlip() && !ProcessMessage() && !ClearDrawScreen() && gpUpdateKey() == 0) {
@@ -159,7 +161,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 											////////////////////第二ステージ//////////////////////
 	
 
-
 	hasBlock = true;
 	char secondeStageImages[3][100] = { "keio.png", "waseda.png", "jochi.png" };
 
@@ -167,17 +168,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	CONTROL *control2 = new CONTROL(secondeStageImages, 2);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 
+		// blockのチェックを行い、0の場合は処理を中断する
 		hasBlock = control2->CheckBlock();
 		if (hasBlock == false) {
 			break;
 		}
 
-		//ゲームオーバーでtrueを返す
+		// ゲームオーバーでtrueを返す
 		if (control2->All(life)) {
 			// lifeが0でなければゲームは続行する
 			life = life - 1;
-			if (life != 0) {
-			}
+			if (life != 0) {}
 			else {
 				isGameOver = true;
 				break;
@@ -193,7 +194,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 		// 画面右下にライフを設定する
 		int gh = LoadGraph("image/unit.png");
-
 		DrawLife(life, gh);
 	}
 
@@ -235,17 +235,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	CONTROL *control3 = new CONTROL(thirdStageImages, 3);
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && ClearDrawScreen() == 0 && GetHitKeyStateAll(key) == 0 && gpUpdateKey() == 0) {
 
+		// blockのチェックを行い、0の場合は処理を中断する
 		hasBlock = control3->CheckBlock();
 		if (hasBlock == false) {
 			break;
 		}
 
-		//ゲームオーバーでtrueを返す
+		// ゲームオーバーでtrueを返す
 		if (control3->All(life)) {
 				life = life - 1;
 			// lifeが0でなければゲームは続行する
-			if (life != 0) {
-			}
+			if (life != 0) {}
 			else {
 				isGameOver = true;
 				break;

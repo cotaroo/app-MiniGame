@@ -57,7 +57,7 @@ void BLOCK::Draw(int num)
 		MovableWidth++;
 	}
 
-	//ブロックが壊れてないときだけ描画
+	// ブロックが壊れてないときだけ描画
 	if (!endflag) {
 		
 		const char *image = imageName;
@@ -145,11 +145,11 @@ void BLOCK::Draw(int num)
 	}
 	else {
 		if (count<40) {
-			//透過度を指定
+			// 透過度を指定
 			SetDrawBlendMode(DX_BLENDMODE_ALPHA, (255 / 40)*(40 - count));
-			//描画
+			// 描画
 			DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
-			//設定を戻す
+			// 設定を戻す
 			SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 			++count;
 		}
