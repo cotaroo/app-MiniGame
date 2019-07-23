@@ -6,25 +6,25 @@
 
 class CONTROL {
 private:
-	//バークラスのポインタ
+	// バークラスのポインタ
 	BAR * bar;
-	//ボールクラスのポインタ
+	// ボールクラスのポインタ
 	BALL *ball;
-	//ブロッククラスのポインタ
+	// ブロッククラスのポインタ
 	BLOCK *block[12];
 
-	//ボールとバーとブロックの座標
+	// ボールとバーとブロックの座標
 	int bdx, bdy, blx, bly, bkx, bky;
 
 
-	//ボールとバーとブロックの画像の幅と高さ
+	// ボールとバーとブロックの画像の幅と高さ
 	int bdwidth, bdheight, blwidth, blheight, bkwidth, bkheight;
 
 
-	//バウンド音とぶつかり音のフラグ
+	// バウンド音とぶつかり音のフラグ
 	bool boundflag, demolishflag;
 
-	//バウンド音とぶつかり音のサウンドハンドル
+	// バウンド音とぶつかり音のサウンドハンドル
 	int bh, dh;
 
 

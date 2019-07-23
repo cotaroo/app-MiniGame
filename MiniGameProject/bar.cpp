@@ -8,14 +8,14 @@ BAR::BAR()
 
 	GetGraphSize(gh, &width, &height);
 
-	//y座標は固定なのでここで設定
+	// y座標は固定なのでここで設定
 	y = 460;
 
-	//最初は真ん中
+	// 最初は真ん中
 	x = WIDTH / 2;
 
 
-	//終了フラグは偽にしとく
+	// 終了フラグは偽にしとく
 	endflag = false;
 
 }
@@ -30,19 +30,19 @@ void BAR::KeyGet()
 {
 
 	if (key[KEY_INPUT_LEFT] == 1) {
-		//左に移動。
+		// 左に移動。
 		x -= SPEED;
 	}
 	if (key[KEY_INPUT_RIGHT] == 1) {
-		//右に移動
+		// 右に移動
 		x += SPEED;
 	}
 	if (key[KEY_INPUT_ESCAPE] == 1) {
-		//エスケープキーが押されていれば終了フラグをtrueにする
+		// エスケープキーが押されていれば終了フラグをtrueにする
 		endflag = true;
 	}
 
-	//画面のはみ出し処理
+	// 画面のはみ出し処理
 	if (x<width / 2)
 		x = width / 2;
 
@@ -78,13 +78,13 @@ int BAR::GetHeight()
 bool BAR::All()
 {
 
-	//キー処理
+	// キー処理
 	KeyGet();
 
-	//描画処理
+	// 描画処理
 	Draw();
 
-	//終了フラグを返す。
+	// 終了フラグを返す。
 	return endflag;
 
 }

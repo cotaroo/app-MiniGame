@@ -9,16 +9,16 @@ BALL::BALL(int stageNumber)
 
 	GetGraphSize(gh, &width, &height);
 
-	//y座標は固定なのでここで設定
+	// y座標は固定なのでここで設定
 	y = 410 - height / 2;
 
-	//最初は真ん中
+	// 最初は真ん中
 	x = WIDTH / 2;
 
 	switch(stageNumber) {
 
 	case 1:
-		//最初の係数
+		// 最初の係数
 		dx = 3;
 		dy = -3;
 		break;
@@ -50,36 +50,36 @@ void BALL::Move(int life) {
 	// endflag を初期的にfalseにしておく
 	endflag = false;
 
-	//まず音はOFFにしとく
+	// まず音はOFFにしとく
 	soundflag = false;
 
-	//移動量を加算
+	// 移動量を加算
 	x += (dx);
 	y += (dy);
 
 
-	//画面はみ出し処理
+	// 画面はみ出し処理
 	if (x<width / 2) {
 		x = width / 2;
 		dx *= -1;
-		//当たったのでサウンドフラグを立てる
+		// 当たったのでサウンドフラグを立てる
 		soundflag = true;
 	}
 	if (x>WIDTH - width / 2) {
 		x = WIDTH - width / 2;
 		dx *= -1;
-		//当たったのでサウンドフラグを立てる
+		// 当たったのでサウンドフラグを立てる
 		soundflag = true;
 	}
 
 	if (y<height / 2) {
 		y = height / 2;
 		dy *= -1;
-		//当たったのでサウンドフラグを立てる
+		// 当たったのでサウンドフラグを立てる
 		soundflag = true;
 	}
 
-	//下にはみ出たらゲームオーバー
+	// 下にはみ出たらゲームオーバー
 	if (y>HEIGHT) {
 		if (life == 0) {
 		}
@@ -149,7 +149,7 @@ bool BALL::All(int life)
 
 	Move(life);
 
-	//描画処理
+	// 描画処理
 	Draw();
 
 	return endflag;

@@ -17,5 +17,5 @@
 #define CHARBUFF 124
 
 
-//キー押下状態格納変数
+// キー押下状態格納変数
 extern char key[256];

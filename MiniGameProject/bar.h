@@ -6,13 +6,13 @@
 
 class BAR {
 private:
-	//x座標、y座標
+	// x座標、y座標
 	int x, y;
 
-	//画像の横、縦幅
+	// 画像の横、縦幅
 	int width, height;
 
-	//終了フラグ。終了ならtrue
+	// 終了フラグ。終了ならtrue
 	bool endflag;
 
 	//グラフィックハンドル

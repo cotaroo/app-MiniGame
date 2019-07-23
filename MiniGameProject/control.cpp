@@ -6,55 +6,55 @@
 void CONTROL::HitCheckBallAndBar()
 {
 
-	//最初はフラグをfalseにしとく。
+	// 最初はフラグをfalseにする
 	boundflag = false;
 
-	//ボールクラス内での音フラグをセット
+	// ボールクラス内での音フラグをセットする
 	boundflag = ball->GetSoundflag();
 
 
-	//バーの座標取得
+	// バーの座標取得する
 	bdx = bar->GetX();
 	bdy = bar->GetY();
 
-	//ボールの座標取得
+	// ボールの座標取得する
 	blx = ball->GetX();
 	bly = ball->GetY();
 
 
-	//ボールとバーの高さの半分を足したものよりも
-	//バーの中心とボールの中心の距離の絶対値の方が小さかったら当たり
-	//その距離より大きいやつは除外
+	// ボールとバーの高さの半分を足したものよりも
+	// バーの中心とボールの中心の距離の絶対値の方が小さかったら当たり
+	// その距離より大きいやつは除外
 	if (abs(bdy - bly)<blheight / 2 + bdheight / 2) {
-		//且つ、ボールがバー内にあれば当たり
+		// 且つ、ボールがバー内にあれば当たり
 		if (bdx + bdwidth / 2>blx &&
 			bdx - bdwidth / 2<blx) {
-			//バーの左端に当たっていれば、逆方向に飛ばす。
+			// バーの左端に当たっていれば、逆方向に飛ばす
 			if (blx<bdx - bdwidth / 2 * 2 / 3) {
-				//ボールを反転
+				// ボールを反転
 				ball->SetDX(-1 * ball->GetDX());
-				//Yは跳ね返すだけ
+				// Yは跳ね返すだけ
 				ball->SetDY(ball->GetDY()*-1);
-				//バウンド音フラグを立てる。
+				// バウンド音フラグを立てる
 				boundflag = true;
 
-				//右端
+				// 右端
 			}
 			else if (blx>bdx + bdwidth / 2 * 2 / 3) {
-				//ボールを反転
+				// ボールを反転
 				ball->SetDX(-1 * ball->GetDX());
-				//Yは跳ね返すだけ
+				// Yは跳ね返すだけ
 				ball->SetDY(ball->GetDY()*-1);
-				//バウンド音フラグを立てる。
+				// バウンド音フラグを立てる
 				boundflag = true;
 
-				//それ以外はただ反射
+				// それ以外はただ反射
 			}
 			else {
-				//xは何もなし
-				//Yは跳ね返すだけ
+				// xは何もなし
+				// Yは跳ね返すだけ
 				ball->SetDY(ball->GetDY()*-1);
-				//バウンド音フラグを立てる。
+				// バウンド音フラグを立てる
 				boundflag = true;
 			}
 		}
@@ -76,64 +76,64 @@ bool CONTROL::CheckBlock()
 void CONTROL::HitCheckBallAndBlock()
 {
 
-	//破壊音フラグ
+	// 破壊音フラグ
 	demolishflag = false;
 
-	//ボールの座標取得
+	// ボールの座標取得
 	blx = ball->GetX();
 	bly = ball->GetY();
 
-	//ブロック全てをループ
+	// ブロック全てをループ
 	for (int i = 0; i<12; ++i) {
-		//壊れてない奴だけ対象
+		// 壊れてない奴だけ対象
 		if (!block[i]->GetFlag()) {
 			bkx = block[i]->GetX();
 			bky = block[i]->GetY();
 
-			//ブロックの上との当たり判定
+			// ブロックの上との当たり判定
 			if (blx<bkx + bkwidth / 2 && blx>bkx - bkwidth / 2 &&
 				bly + blheight / 2>bky - bkheight / 2 && bly + blheight / 2<bky + bkheight / 2) {
-				//フラグをオフに
+				// フラグをオフに
 				block[i]->SetFlag(true);
-				//破壊音フラグを立てる
+				// 破壊音フラグを立てる
 				demolishflag = true;
-				//ボールはただ跳ね返すだけ
+				// ボールはただ跳ね返すだけ
 				ball->SetDY(ball->GetDY()*-1);
 
-				//ブロックの下との当たり判定
+				// ブロックの下との当たり判定
 			}
 			else if (blx<bkx + bkwidth / 2 && blx>bkx - bkwidth / 2 &&
 				bly - blheight / 2>bky - bkheight / 2 && bly - blheight / 2<bky + bkheight / 2) {
 
-				//フラグをオフに
+				// フラグをオフに
 				block[i]->SetFlag(true);
-				//破壊音フラグを立てる
+				// 破壊音フラグを立てる
 				demolishflag = true;
-				//ボールはただ跳ね返すだけ
+				// ボールはただ跳ね返すだけ
 				ball->SetDY(ball->GetDY()*-1);
 
-				//ブロックの左との当たり判定
+				// ブロックの左との当たり判定
 			}
 			else if (blx + blwidth / 2<bkx - bkwidth / 2 + blwidth && blx + blwidth / 2>bkx - bkwidth / 2 &&
 				bly>bky - bkheight / 2 && bly<bky + bkheight / 2) {
 
-				//フラグをオフに
+				// フラグをオフに
 				block[i]->SetFlag(true);
-				//破壊音フラグを立てる
+				// 破壊音フラグを立てる
 				demolishflag = true;
-				//ボールはただ跳ね返すだけ
+				// ボールはただ跳ね返すだけ
 				ball->SetDX(ball->GetDX()*-1);
 
-				//ブロックの右との当たり判定
+				// ブロックの右との当たり判定
 			}
 			else if (blx - blwidth / 2<bkx + bkwidth / 2 && blx - blwidth / 2>bkx + bkwidth / 2 - blwidth &&
 				bly>bky - bkheight / 2 && bly<bky + bkheight / 2) {
 
-				//フラグをオフに
+				// フラグをオフに
 				block[i]->SetFlag(true);
-				//破壊音フラグを立てる
+				// 破壊音フラグを立てる
 				demolishflag = true;
-				//ボールはただ跳ね返すだけ
+				// ボールはただ跳ね返すだけ
 				ball->SetDX(ball->GetDX()*-1);
 
 			}
@@ -167,19 +167,19 @@ bool CONTROL::All(int life)
 	}
 
 
-	//バーの処理
+	// バーの処理
 	bar->All();
 
-	//ボールの動き
+	// ボールの動き
 	back = ball->All(life);
 
-	//ボールとバーの当たり判定
+	// ボールとバーの当たり判定
 	HitCheckBallAndBar();
 
-	//ボールとブロックの当たり判定
+	// ボールとブロックの当たり判定
 	HitCheckBallAndBlock();
 
-	///音再生
+	/// 音再生
 	SoundPlay();
 
 	return back;
@@ -189,30 +189,30 @@ bool CONTROL::All(int life)
 CONTROL::CONTROL(char images[3][100], int stageNumber)
 {
 
-	//バーとボールのインスタンスを生成
+	// バーとボールのインスタンスを生成
 	bar = new BAR;
 	ball = new BALL(stageNumber);
 
 	boundflag = false;
 	demolishflag = false;
 
-	//バーの幅と高さ
+	// バーの幅と高さ
 	bdwidth = bar->GetWidth();
 	bdheight = bar->GetHeight();
 
-	//ボールの幅と高さ
+	// ボールの幅と高さ
 	blwidth = ball->GetWidth();
 	blheight = ball->GetHeight();
 
-	//音声ファイル読み込み。
+	// 音声ファイル読み込み。
 	bh = LoadSoundMem("bound.wav");
 	dh = LoadSoundMem("demolish.wav");
 
-	//画像ファイル名の配列
+	// 画像ファイル名の配列
 	// char images[3][100] = { "kandai.png","kangaku.png","ritsumei.png" };
 
-	//ブロックの間ルを50ピクセルあけて、横4列、縦3行で配置
-	//左端が45ピクセの位置になる。それに画像の横幅の半分を足す
+	// ブロックの間ルを50ピクセルあけて、横4列、縦3行で配置
+	// 左端が45ピクセの位置になる。それに画像の横幅の半分を足す
 	for (int i = 0; i<12; ++i) {
 
 		char imageFolder[100] = "image/";
