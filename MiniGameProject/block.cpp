@@ -65,7 +65,7 @@ void BLOCK::Draw(int num)
 		char images[9][101] = { "kandai.png" , "kangaku.png", "ritsumei.png", "keio.png", "waseda.png", "jochi.png", "todai.png"," kyodai.png", "oxford.png" };
 
 		// ˆÈ‰º‚Å‰æ‘œ‚É‚æ‚é“®‚«‚Ì•ª—Þ‚ðs‚¤
-		if (*imageName == images[0][101] || *imageName == images[1][101] || *imageName == images[2][101]) {
+		if (*imageName == images[0][101] || *imageName == images[1][101]) {
 			if (MovableWidth == 30) {
 				if (FlagForStage1 == false) {
 					FlagForStage1 = true;
@@ -78,7 +78,7 @@ void BLOCK::Draw(int num)
 
 				this->x = inix + (MovableWidth) * 2;
 
-				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
+				DrawGraph(x - width / 2 , y - height / 2, gh[num], FALSE);
 			}
 			else {
 
@@ -87,8 +87,9 @@ void BLOCK::Draw(int num)
 				DrawGraph(x - width / 2, y - height / 2, gh[num], FALSE);
 			}
 		}
+
 		
-		else if (*imageName == images[3][101] || *imageName == images[4][101] || *imageName == images[5][101]) {
+		else if (*imageName == images[3][101] || *imageName == images[4][101]) {
 			if (MovableWidth == 30) {
 				if (FlagForStage2 == false) {
 					FlagForStage2 = true;

@@ -14,5 +14,8 @@
 #define WIDTH 640
 #define HEIGHT 480
 
+#define CHARBUFF 124
+
+
 //ƒL[‰Ÿ‰ºó‘ÔŠi”[•Ï”
 extern char key[256];

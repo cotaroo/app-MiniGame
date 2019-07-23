@@ -36,7 +36,7 @@ private:
 	void HitCheckBallAndBlock();
 	void SoundPlay();
 public:
-	bool All();
+	bool All(int);
 	bool CheckBlock();
 	CONTROL(char [3][100], int);
 	~CONTROL();
