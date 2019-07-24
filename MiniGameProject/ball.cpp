@@ -29,8 +29,8 @@ BALL::BALL(int stageNumber)
 		break;
 
 	case 3:
-		dx = 4;
-		dy = -4;
+		dx = 5;
+		dy = -5;
 		break;
 	}
 
