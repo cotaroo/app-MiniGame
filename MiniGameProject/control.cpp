@@ -9,10 +9,6 @@ void CONTROL::HitCheckBallAndBar()
 	// 最初はフラグをfalseにする
 	boundflag = false;
 
-	// ボールクラス内での音フラグをセットする
-	boundflag = ball->GetSoundflag();
-
-
 	// バーの座標取得する
 	bdx = bar->GetX();
 	bdy = bar->GetY();
