@@ -5,8 +5,6 @@ BALL::BALL(int stageNumber)
 {
 
 	gh = LoadGraph("ball.bmp");
-
-
 	GetGraphSize(gh, &width, &height);
 
 	// y座標は固定なのでここで設定
@@ -18,9 +16,11 @@ BALL::BALL(int stageNumber)
 	switch(stageNumber) {
 
 	case 1:
+
 		// 最初の係数
 		dx = 3;
 		dy = -3;
+
 		break;
 
 	case 2:
@@ -32,11 +32,10 @@ BALL::BALL(int stageNumber)
 		dx = 5;
 		dy = -5;
 		break;
+
 	}
 
 	endflag = false;
-
-	soundflag = false;
 
 }
 
@@ -47,47 +46,49 @@ void BALL::Draw() {
 }
 
 void BALL::Move(int life) {
+
 	// endflag を初期的にfalseにしておく
 	endflag = false;
-
-	// まず音はOFFにしとく
-	soundflag = false;
 
 	// 移動量を加算
 	x += (dx);
 	y += (dy);
 
-
 	// 画面はみ出し処理
 	if (x<width / 2) {
+
 		x = width / 2;
 		dx *= -1;
-		// 当たったのでサウンドフラグを立てる
-		soundflag = true;
+
 	}
 	if (x>WIDTH - width / 2) {
+
 		x = WIDTH - width / 2;
 		dx *= -1;
-		// 当たったのでサウンドフラグを立てる
-		soundflag = true;
+
 	}
 
 	if (y<height / 2) {
+
 		y = height / 2;
 		dy *= -1;
-		// 当たったのでサウンドフラグを立てる
-		soundflag = true;
+
 	}
 
 	// 下にはみ出たらゲームオーバー
 	if (y>HEIGHT) {
+
 		if (life == 0) {
+
 		}
+
 		else {
+
 			y = HEIGHT - height / 2;
 			dy *= -1;
-			soundflag = true;
+
 		}
+
 		endflag = true;
 
 	}
@@ -96,17 +97,23 @@ void BALL::Move(int life) {
 
 int BALL::GetX()
 {
+
 	return x;
+
 }
 
 int BALL::GetY()
 {
+
 	return y;
+
 }
 
 void BALL::SetDX(int x)
 {
+
 	dx = x;
+
 }
 
 void BALL::SetDY(int y)
@@ -128,21 +135,17 @@ int BALL::GetDY()
 
 int BALL::GetWidth()
 {
+
 	return width;
+
 }
 
 int BALL::GetHeight()
 {
+
 	return height;
+
 }
-
-bool BALL::GetSoundflag()
-{
-	return soundflag;
-}
-
-
-
 
 bool BALL::All(int life)
 {
@@ -159,12 +162,12 @@ bool BALL::All(int life)
 
 void BALL::Destroy() {
 
-
 }
 
 
 BALL::~BALL()
 {
+
 	Destroy();
 
 }
